@@ -82,7 +82,7 @@ export default function Header() {
 
   return (
     <header className="h-25 bg-[#F8F8F8] text-white p-[30px] flex justify-center items-center shadow-md">
-      <section className="max-w-325 w-325 flex items-center justify-between">
+      <section className="max-w-[1650px] w-full flex items-center justify-between">
         <Burger 
           opened={opened}
           onClick={toggle}
