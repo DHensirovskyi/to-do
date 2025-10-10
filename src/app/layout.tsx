@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import { Montagu_Slab, Montserrat } from "next/font/google";
 import "./globals.css";
+import "@mantine/core/styles.css";
 import Header from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
 import { MantineProvider } from "@mantine/core";
 
 const montserrat = Montserrat({
-  variable: "--font-geist-sans",
+  variable: "--font-montserrat",
   subsets: ["latin"],
   weight: ['300', '400', '500', '600', '700'],
 });
 
-const MontaguSlab = Montagu_Slab({
-  variable: "--font-geist-sans",
+const montaguSlab = Montagu_Slab({
+  variable: "--font-montagu-slab", 
   subsets: ["latin"],
   weight: ['300', '400', '500', '700'],
 });
@@ -29,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body className={`${montserrat.variable} ${MontaguSlab.variable} antialiased font-sans`}>
+        <body className={`${montserrat.variable} ${montaguSlab.variable} antialiased font-sans`}>
           <MantineProvider>
           <div className="flex h-screen flex-col">
             <Header />
