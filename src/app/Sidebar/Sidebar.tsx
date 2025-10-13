@@ -63,7 +63,7 @@ export default function Sidebar() {
     const pathname = usePathname()
 
     return(
-        <aside className="hidden md:flex flex-col w-91 bg-[#FF6767] text-white py-9 px-5 rounded-r-[10px] shadow-md shadow-black/50">
+        <aside className="hidden md:flex flex-col w-91 bg-[linear-gradient(178deg,#363636_0%,#4c4c4c_100%)] text-white py-9 px-5 shadow-md shadow-black/50">
           <section className="flex flex-col justify-between h-[100%]">
             <div className="flex flex-col gap-5">
               {DashboardUser.map((user) => (
@@ -85,8 +85,8 @@ export default function Sidebar() {
                     <Link 
                       href={`/${control.slug}`}
                       key={control.slug}
-                      className={`rounded-[14px] p-4 cursor-pointer hover:bg-white/10 hover:text-white flex flex-col w-full transition-colors active:scale-98 ${
-                        isActive ? 'bg-white text-[#FF6767]' : ''
+                      className={`rounded-[14px] p-4 cursor-pointer hover:bg-white/5 hover:text-white flex flex-col w-full transition-colors active:scale-98 ${
+                        isActive ? 'bg-white text-[#383838]' : ''
                       }`}
                     >
                       <div className="flex gap-4 items-center">
@@ -102,7 +102,7 @@ export default function Sidebar() {
             </div>
             <Link 
               href={'/logout'} 
-              className={`rounded-[14px] p-4 cursor-pointer hover:bg-white/10 hover:text-white flex flex-col w-full transition-colors active:scale-98  ${pathname === '/logout' ? 'bg-white text-[#FF6767]' : ''}`}>
+              className={`rounded-[14px] p-4 cursor-pointer hover:bg-white/5 hover:text-white flex flex-col w-full transition-colors active:scale-98  ${pathname === '/logout' ? 'bg-white text-[#383838]' : ''}`}>
               <div className="flex gap-4 items-center">
                 <MdOutlineLogout size={25}/>
                 <p className="text-[1rem] font-medium">

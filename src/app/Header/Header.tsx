@@ -81,17 +81,17 @@ export default function Header() {
   
 
   return (
-    <header className="h-25 bg-[#F8F8F8] text-white p-[30px] flex justify-center items-center shadow-md">
-      <section className="max-w-325 w-325 flex items-center justify-between">
+    <header className="h-25 bg-[#363636] text-white p-[30px] flex justify-center items-center">
+      <section className="max-w-[1650px] w-full flex items-center justify-between">
         <Burger 
           opened={opened}
           onClick={toggle}
-          color="black"
+          color="white"
           size="md"
           className="md:hidden"
         />
         <h2 className="font-semibold sm:text-[2rem] text-[1.5rem]">
-          <span className="text-[#FF6767]">{pageTitles[pathname as keyof typeof pageTitles] ?? "To-Do"}</span>
+          <span className="text-white">{pageTitles[pathname as keyof typeof pageTitles] ?? "To-Do"}</span>
         </h2>
 
         
@@ -109,8 +109,8 @@ export default function Header() {
         offset={0}
         overlayProps={{ opacity: 0.01}}
         styles={{
-          content: { backgroundColor: '#FF6767'},
-          header: { backgroundColor: '#CF4C4C', borderBottom: '2px solid rgb(255,255,255,0.8)'},
+          content: { backgroundColor: '#383838'},
+          header: { backgroundColor: '#383838', borderBottom: '2px solid rgb(255,255,255,0.5)'},
           close: { color: 'white'},
           title: {color: 'white', fontWeight: '500'}
         }}
@@ -118,7 +118,7 @@ export default function Header() {
         scrollAreaComponent={ScrollArea.Autosize}
         title={pageTitles[pathname as keyof typeof pageTitles] ?? "To-Do"}
       >
-      <aside className="flex-col w-full bg-[#FF6767] text-white px-5 rounded-r-[10px]">
+      <aside className="flex-col w-full bg-[#383838] text-white px-5 rounded-r-[10px]">
         <section className="flex flex-col justify-between mt-10">
             <TextInputMobile />
             <div className="flex flex-col gap-5">
@@ -142,7 +142,7 @@ export default function Header() {
                       href={`/${control.slug}`}
                       key={control.slug}
                       className={`rounded-[14px] p-4 cursor-pointer hover:bg-white/10 hover:text-white flex flex-col w-full transition-colors active:scale-98 ${
-                        isActive ? 'bg-white text-[#FF6767]' : ''
+                        isActive ? 'bg-white text-[#383838]' : ''
                       }`}
                       onClick={close}
                     >
@@ -159,7 +159,7 @@ export default function Header() {
             </div>
             <Link 
               href={'/logout'} 
-              className={`rounded-[14px] p-4 cursor-pointer hover:bg-white/10 hover:text-white flex flex-col w-full transition-colors active:scale-98  ${pathname === '/logout' ? 'bg-white text-[#FF6767]' : ''}`}>
+              className={`rounded-[14px] p-4 cursor-pointer hover:bg-white/10 hover:text-white flex flex-col w-full transition-colors active:scale-98  ${pathname === '/logout' ? 'bg-white text-[#383838]' : ''}`}>
               <div className="flex gap-4 items-center">
                 <MdOutlineLogout size={25}/>
                 <p className="text-[1rem] font-medium">

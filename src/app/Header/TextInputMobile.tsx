@@ -12,11 +12,11 @@ export default function TextInputDesktop(){
     return(
         <div className="flex items-center gap-3 flex-1 mb-10">
             <div className="flex gap-2.5">
-                <div className="bg-white w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#ff6767d4]">
-                    <FaBell color="#FF6767" size={15} />
+                <div className="bg-[#727272] w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#7a7a7a]">
+                    <FaBell color="#FFF" size={15} />
                 </div>
-                <div className="bg-white w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#ff6767d4]">
-                    <FaCalendar color="#FF6767" size={15}/>
+                <div className="bg-[#727272] w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#7a7a7a]">
+                    <FaCalendar color="#FFF" size={15}/>
                 </div>
             </div>
             <TextInput
@@ -47,8 +47,8 @@ export default function TextInputDesktop(){
                 radius="md"
             />
             
-            <div className="bg-[#ffffff] h-[36px] w-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 hover:bg-[#ff6767d4] active:scale-98" onClick={handleSearch}>
-              <FaSearch size={15} color="#FF6767" />
+            <div className="bg-[#727272] h-[36px] w-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 hover:bg-[#7a7a7a] active:scale-98" onClick={handleSearch}>
+              <FaSearch size={15} color="#FFF" />
             </div>
           </div>
     )

@@ -1,5 +1,7 @@
 export default function Home() {
   return (
-    <><h1>hello</h1></>
+    <main className="px-18">
+      <h1>Welcome Page!</h1>
+    </main>
   );
 }
