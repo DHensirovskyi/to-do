@@ -41,13 +41,13 @@ export default function Dashboard() {
                     </div>
                 ))}
                 </div>
-                <button className="w-24 h-9 border border-[#363636] rounded-[8px] p-[1rem] flex gap-1 items-center justify-center cursor-pointer hover:bg-[#363636] hover:text-white">
+                <button className="w-24 h-9 border border-[#363636] rounded-[8px] p-[1rem] flex gap-1 items-center justify-center cursor-pointer hover:bg-[#363636] hover:text-white transition duration-200">
                     <IoPersonAddSharp />
                     <p className="text-[0.75rem font-medium text-[#363636]]">Invite</p>
                 </button>
             </div>
         </div>
-        <div className="border rounded-[8px] border-black/30 p-6 grid xl:gap-4 gap-2 grid-cols-1 xl:grid-cols-2 xl:mt-10 mt-0">
+        <div className="border rounded-[8px] sm:border-black/10 border-transparent sm:p-6 p-0 grid xl:gap-4 gap-2 grid-cols-1 xl:grid-cols-2 xl:mt-10 mt-0">
             <ToDo />
             <div className="border flex flex-col xl:gap-4 gap-2 ">
                 <TaskStatus />

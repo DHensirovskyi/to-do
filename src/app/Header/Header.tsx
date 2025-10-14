@@ -70,16 +70,9 @@ const DashboardControls = [
 
 
 export default function Header() {
-  const [value, setValue] = useState('');
   const [opened, { toggle, close }] = useDisclosure(false);
   const pathname = usePathname()
-
-  const handleSearch = () => {
-    console.log("🔍 Searching for:", value);
-  };
-
   
-
   return (
     <header className="h-25 bg-[#363636] text-white p-[30px] flex justify-center items-center">
       <section className="max-w-[1650px] w-full flex items-center justify-between">
