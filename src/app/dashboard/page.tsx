@@ -47,9 +47,9 @@ export default function Dashboard() {
                 </button>
             </div>
         </div>
-        <div className="border rounded-[8px] sm:border-black/10 border-transparent sm:p-6 p-0 grid xl:gap-4 gap-2 grid-cols-1 xl:grid-cols-2 xl:mt-10 mt-0">
+        <div className=" rounded-[8px] border-transparent grid xl:gap-4 gap-2 grid-cols-1 xl:grid-cols-2 xl:mt-10 mt-0">
             <ToDo />
-            <div className="border flex flex-col xl:gap-4 gap-2 ">
+            <div className="flex flex-col xl:gap-4 gap-2 ">
                 <TaskStatus />
                 <CompletedTask />
             </div>

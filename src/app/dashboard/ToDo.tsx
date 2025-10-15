@@ -7,7 +7,6 @@ const day = today.getDate();
 const month = today.toLocaleString('en', { month: 'long' });
 const formattedDate = `${day} ${month}`;
 
-// Массив с заданиями
 const tasks = [
   {
     id: 1,
@@ -61,8 +60,7 @@ const getPriorityColor = (priority: string) => {
 
 export default function ToDo(){
   return(
-    <section className="rounded-[8px] p-3.5 shadow-xl flex flex-col gap-5">
-      {/* Заголовок секции */}
+    <section className="rounded-[8px] p-3.5 shadow-xl flex flex-col gap-5 bg-[#fafbfd]">
       <div className="flex flex-col gap-2.5 w-full">
         <div className="flex justify-between">
           <div className="flex justify-center items-center gap-1">
@@ -84,11 +82,9 @@ export default function ToDo(){
         </div>
       </div>
 
-      {/* Список заданий */}
       <div className="px-2 flex flex-col gap-5">
         {tasks.map((task) => (
           <div key={task.id} className="flex flex-col gap-3">
-            {/* Карточка задания */}
             <div className="rounded-[8px] border border-black/20 flex flex-col gap-4 p-3">
               <div className="grid grid-cols-[1fr_auto] items-start gap-3 max-w-full">
                 <div className="flex items-center gap-3 min-w-0">
@@ -121,9 +117,8 @@ export default function ToDo(){
                   />
                 </div>
               </div>
-            </div>
 
-            <div className="flex justify-between text-[0.625rem] items-center">
+              <div className="flex justify-between text-[0.625rem] items-center">
               <div className="flex gap-4 justify-center items-center">
                 <p>
                   Priority:{" "}
@@ -143,6 +138,9 @@ export default function ToDo(){
               </div>
             </div>
           </div>
+          </div>
+
+            
         ))}
       </div>
     </section>
