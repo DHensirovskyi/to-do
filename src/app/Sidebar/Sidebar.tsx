@@ -63,7 +63,7 @@ export default function Sidebar() {
     const pathname = usePathname()
 
     return(
-        <aside className="hidden md:flex flex-col w-91 bg-[linear-gradient(178deg,#363636_0%,#4c4c4c_100%)] text-white py-9 px-5 shadow-md shadow-black/50">
+        <aside className="hidden md:flex flex-col w-80 bg-[linear-gradient(178deg,#363636_0%,#4c4c4c_100%)] text-white py-9 px-5 shadow-md shadow-black/50">
           <section className="flex flex-col justify-between h-[100%]">
             <div className="flex flex-col gap-5">
               {DashboardUser.map((user) => (

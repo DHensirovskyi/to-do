@@ -61,7 +61,7 @@ export default function TextInputDesktop(){
 
             <div className="flex flex-col justify-center min-w-30">
                 <p className="text-[1rem] leading-tight text-white font-bold truncate">{day}</p>
-                <p className="text-[#3ABEFF] text-[0.875rem] font-semibold truncate">{formattedDate}</p>
+                <p className="text-[#F24E1E] text-[0.875rem] font-semibold truncate">{formattedDate}</p>
             </div>
             </div>
         </div>

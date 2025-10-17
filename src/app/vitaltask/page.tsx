@@ -58,9 +58,13 @@ export default function Dashboard() {
   const [selectedTask, setSelectedTask] = useState<VitalProps["tasks"][number] | null>(null);
 
   return (
-    <main className="h-full">
+    <main className="h-full xl:px-14 xl:py-8">
       <div className="grid xl:grid-cols-2 grid-cols-1 gap-4 h-full">
-        <TaskLeft tasks={tasks} onSelect={setSelectedTask} />
+        <TaskLeft
+          tasks={tasks}
+          onSelect={setSelectedTask}
+          selectedTaskId={selectedTask?.id || null}
+        />
         <TaskRight task={selectedTask} />
       </div>
     </main>

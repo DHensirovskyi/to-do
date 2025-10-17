@@ -1,7 +1,9 @@
+import InviteModal from "./dashboard/InviteModal";
+
 export default function Home() {
   return (
     <main className="px-18">
-      <h1>Welcome Page!</h1>
+      <InviteModal />
     </main>
   );
 }

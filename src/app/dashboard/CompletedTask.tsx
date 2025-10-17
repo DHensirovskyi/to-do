@@ -29,7 +29,7 @@ export default function CompletedTask(){
         <div className="flex justify-between">
           <div className="flex justify-center items-center gap-1">
             <MdOutlineTask color="#A1A3AB" size={30}/>
-            <p className="text-[1rem] font-medium">To-Do</p>
+            <p className="text-[1rem] font-medium">Completed</p>
           </div>
         </div>
       </div>

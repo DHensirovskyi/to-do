@@ -16,7 +16,7 @@ export default function TaskRight({ task }: TaskRightProps) {
   }
 
   return (
-    <section className="w-full flex flex-col justify-between border rounded-[8px] border-black/20 p-3.5">
+    <section className="w-full flex flex-col justify-between border rounded-[8px] border-black/20 bg-white p-5">
       <div className="flex flex-col gap-10">
         <div className="grid sm:grid-cols-[160px_1fr] grid-cols-1 gap-4">
           <div className="w-[160px] h-[160px] rounded-[14px] overflow-hidden">
