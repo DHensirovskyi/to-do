@@ -2,7 +2,6 @@
 
 import { Burger, Drawer, ScrollArea } from "@mantine/core";
 import { useDisclosure } from '@mantine/hooks';
-import { useState } from "react";
 import Image from "next/image";
 import { FaExclamation } from "react-icons/fa6";
 import { MdTask } from "react-icons/md";

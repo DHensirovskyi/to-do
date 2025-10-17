@@ -107,13 +107,13 @@ export default function ToDo(){
                 <p className="text-[#A1A3AB] text-[0.875rem] font-normal break-words overflow-hidden min-w-0">
                   {task.description}
                 </p>
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 w-[90px] h-[90px] rounded-[14px] overflow-hidden">
                   <Image 
                     src={task.image} 
                     width={90} 
                     height={90} 
                     alt={`task-${task.id}`}
-                    className="rounded-[4px] object-cover"
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </div>

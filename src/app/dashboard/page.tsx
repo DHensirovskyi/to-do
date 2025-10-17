@@ -14,8 +14,8 @@ const usersImg = [
 
 export default function Dashboard() {
   return (
-    <main className="xl:px-18 xl:py-15 ">
-      <section className="w-full flex flex-col gap-8">
+    <main className="xl:px-18 xl:py-15">
+      <section className="w-full flex flex-col">
         <div className="grid xl:grid-cols-2 grid-cols-1 gap-4">
             <h1 className="text-[2rem] text-black font-medium">Welcome back, Sundar 👋</h1>
             <div className="flex gap-5 xl:ml-auto items-center">

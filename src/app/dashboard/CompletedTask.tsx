@@ -1,5 +1,4 @@
 import { MdOutlineTask } from "react-icons/md";
-import { FaPlus } from "react-icons/fa";
 import Image from "next/image";
 
 const tasks = [
