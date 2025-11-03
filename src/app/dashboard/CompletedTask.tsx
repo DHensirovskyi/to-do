@@ -1,5 +1,6 @@
 import { MdOutlineTask } from "react-icons/md";
 import Image from "next/image";
+import UpdateTaskModal from "../modalWindows/UpdateTaskModal";
 
 const tasks = [
   {
@@ -48,11 +49,7 @@ export default function CompletedTask(){
                     {task.title}
                   </p>
                 </div>
-                <button className="flex items-baseline cursor-pointer gap-0.5 hover:[&_span]:border-[#F24E1E] hover:[&_span]:bg-[#F24E1E] active:[&_span]:border-[#ee6136] active:[&_span]:bg-[#ee6136] active:scale-95 flex-shrink-0">
-                  <span className="border border-[#A1A3AB] rounded-full p-0.5 transition-colors duration-200" />
-                  <span className="border border-[#A1A3AB] rounded-full p-0.5 transition-colors duration-200" />
-                  <span className="border border-[#A1A3AB] rounded-full p-0.5 transition-colors duration-200" />
-                </button>
+                <UpdateTaskModal dots={true}/>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-2 max-w-full">

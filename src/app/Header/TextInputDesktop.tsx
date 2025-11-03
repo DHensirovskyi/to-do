@@ -45,23 +45,23 @@ export default function TextInputDesktop(){
                 radius="md"
             />
             
-            <div className="bg-[#727272] h-[36px] w-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 hover:bg-[#7a7a7a] active:scale-98 mr-10" onClick={handleSearch}>
+            <div className="bg-white/13 h-[36px] w-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 hover:bg-[#339af0] active:scale-98 mr-10" onClick={handleSearch}>
                 <FaSearch size={15} color="white" />
             </div>
 
             <div className="flex gap-10 items-center">
             <div className="flex gap-2.5">
-                <div className="bg-[#727272] w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#7a7a7a]">
+                <div className="bg-white/13 w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#339af0]">
                     <FaBell color="white" size={15} />
                 </div>
-                <div className="bg-[#727272] w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#7a7a7a]">
+                <div className="bg-white/13 w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#339af0]">
                     <FaCalendar color="white" size={15}/>
                 </div>
             </div>
 
             <div className="flex flex-col justify-center min-w-30">
                 <p className="text-[1rem] leading-tight text-white font-bold truncate">{day}</p>
-                <p className="text-[#F24E1E] text-[0.875rem] font-semibold truncate">{formattedDate}</p>
+                <p className="text-[#228be6] text-[0.875rem] font-semibold truncate">{formattedDate}</p>
             </div>
             </div>
         </div>

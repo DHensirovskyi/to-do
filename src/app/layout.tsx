@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Montagu_Slab, Montserrat } from "next/font/google";
 import "./globals.css";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
+import '@mantine/dropzone/styles.css';
 import Header from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
 import { MantineProvider } from "@mantine/core";
@@ -30,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body className={`${montserrat.variable} ${montaguSlab.variable} antialiased font-sans`}>
+        <body className={`${montserrat.variable} ${montaguSlab.variable} antialiased font-sans`} suppressHydrationWarning>
           <MantineProvider>
           <div className="flex h-screen flex-col">
             <Header />

@@ -12,10 +12,10 @@ export default function TextInputDesktop(){
     return(
         <div className="flex items-center gap-3 flex-1 mb-10">
             <div className="flex gap-2.5">
-                <div className="bg-[#727272] w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#7a7a7a]">
+                <div className="bg-white/13 w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#339af0]">
                     <FaBell color="#FFF" size={15} />
                 </div>
-                <div className="bg-[#727272] w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#7a7a7a]">
+                <div className="bg-white/13 w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#339af0]">
                     <FaCalendar color="#FFF" size={15}/>
                 </div>
             </div>
@@ -47,7 +47,7 @@ export default function TextInputDesktop(){
                 radius="md"
             />
             
-            <div className="bg-[#727272] h-[36px] w-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 hover:bg-[#7a7a7a] active:scale-98" onClick={handleSearch}>
+            <div className="bg-white/13 h-[36px] w-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 hover:bg-[#339af0] active:scale-98" onClick={handleSearch}>
               <FaSearch size={15} color="#FFF" />
             </div>
           </div>
