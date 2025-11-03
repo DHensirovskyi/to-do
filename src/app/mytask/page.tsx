@@ -18,7 +18,7 @@ export interface VitalProps {
   }[];
 }
 
-export default function VitalTask() {
+export default function MyTask() {
   const [tasks, setTasks] = useState<VitalProps["tasks"]>([]);
   const [selectedTask, setSelectedTask] = useState<VitalProps["tasks"][number] | null>(null);
   const [loading, setLoading] = useState(true);

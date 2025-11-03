@@ -107,10 +107,6 @@ export default function InviteModal() {
             <div className='flex flex-col gap-1.5'>
                <p className="text-[1rem] font-semibold">Project Link</p>
                 <form action="submit" className="flex flex-col sm:flex-row gap-2">
-                  <Input
-                    className="flex-1"
-                    placeholder="https://sharelinkhereandthere.com/34565yy29"
-                  />
                   <Button
                     style={{ flexShrink: 0, background: '#228be6', borderRadius: '8px'}}
                   >

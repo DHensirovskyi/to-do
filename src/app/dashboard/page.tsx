@@ -49,7 +49,7 @@ export default function Dashboard() {
       <main className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#228be6]/20 border-t-[#228be6]"></div>
-          <p className="mt-4 text-[#A1A3AB]">Loading tasks...</p>
+          <p className="mt-4 text-[#A1A3AB]">Loading dashboard...</p>
         </div>
       </main>
     );
@@ -59,7 +59,7 @@ export default function Dashboard() {
     <main className="xl:px-14 xl:py-8">
       <section className="w-full flex flex-col">
         <div className="grid xl:grid-cols-2 grid-cols-1 gap-4">
-            <h1 className="text-[2.25rem] text-black font-medium">Welcome back, Sundar 👋</h1>
+            <h1 className="sm:text-[2.25rem] text-[2rem] text-black font-medium">Welcome back, Sundar 👋</h1>
             <div className="flex gap-5 xl:ml-auto items-center xl:mb-0 mb-10">
                 <div className="flex gap-1">
                 {usersImg.map((img, index) => (

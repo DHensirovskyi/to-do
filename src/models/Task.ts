@@ -9,6 +9,7 @@ const TaskSchema = new mongoose.Schema(
     color: { type: String, default: "#42ADE2" },
     image: { type: String, default: "/tasksDashboard/img1.jpg" },
     createdDate: { type: String, default: () => new Date().toLocaleDateString("de-DE") },
+    category: {type: String, default: '', required: false}
   },
   { timestamps: true }
 );

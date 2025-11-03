@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { MdTask } from "react-icons/md";
 import { MdDashboard } from "react-icons/md";
-import { IoListOutline } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 import { IoHelpCircleSharp } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
@@ -25,6 +24,7 @@ const DashboardUser: DashboardUser[] = [
     email: "sundargurung360@gmail.com"
   }
 ];
+
 const DashboardControls = [
   {
     slug: 'dashboard',
@@ -35,11 +35,6 @@ const DashboardControls = [
     slug: 'mytask',
     icon: <MdTask size={25}/>,
     name: 'My Tasks'
-  },
-  {
-    slug: 'taskcategories',
-    icon: <IoListOutline size={25}/>,
-    name: 'Task Categories'
   },
   {
     slug: 'settings',

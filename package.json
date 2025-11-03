@@ -15,6 +15,7 @@
     "@mantine/hooks": "^8.3.4",
     "@tabler/icons-react": "^3.35.0",
     "axios": "^1.13.1",
+    "bcrypt": "^6.0.0",
     "icons-react": "^3.7.1",
     "lucide-react": "^0.545.0",
     "mongodb": "^6.20.0",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^20",
     "@types/react": "^19",
