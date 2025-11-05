@@ -1,8 +1,12 @@
+// src/app/settings/page.tsx
 'use client'
 
 import SettingsLeft from "./SettingsLeft";
 import SettingsRight from "./SettingsRight";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import type { ComponentType } from "react";
+import { useQuery } from "@apollo/client/react";
+import { GET_USERS } from '../lib/graphql/operations';
 
 export interface VitalProps {
   users: {
@@ -14,40 +18,31 @@ export interface VitalProps {
   }[];
 }
 
+type SettingsRightProps = {
+  tab: 'profile' | 'account';
+  getTab: (tab: 'profile' | 'account') => void;
+  users: {
+    _id: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    image: string;
+  }[];
+};
+
 export type SettingsLeftProps = {
   activeTab: 'profile' | 'account';
   onTabChange: (tab: 'profile' | 'account') => void;
 };
-
 export default function Settings() {
-  const [, setUsers] = useState<VitalProps["users"]>([]);
-  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'profile' | 'account'>('profile');
+  
+  const { data, loading, error } = useQuery<{ users: VitalProps['users'] }>(GET_USERS);
+
+  const SettingsRightTyped = SettingsRight as ComponentType<SettingsRightProps>;
 
   const changeTab = (tabValue: 'profile' | 'account') => {
     setActiveTab(tabValue);
-  };
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  const fetchTasks = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/users');
-      const data = await response.json() as VitalProps["users"];
-      const mappedData = data.map((user: VitalProps["users"][number], index: number) => ({
-        ...user,
-        id: index + 1,
-        _id: user._id
-      }));
-      setUsers(mappedData);
-    } catch (err) {
-      console.error('Failed to fetch users:', err);
-    } finally {
-      setLoading(false);
-    }
   };
 
   if (loading) {
@@ -61,15 +56,24 @@ export default function Settings() {
     );
   }
 
-
+  if (error) {
+    return (
+      <main className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
+        <div className="text-center text-red-500">
+          <p>Error loading settings: {error.message}</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="h-full xl:px-14 xl:py-8">
       <div className="grid xl:grid-cols-3 grid-cols-1 gap-4 h-full">
         <SettingsLeft onTabChange={changeTab} activeTab={activeTab} />
-        <SettingsRight 
-            tab={activeTab} 
-            getTab={changeTab}
+        <SettingsRightTyped
+          tab={activeTab}
+          getTab={changeTab}
+          users={data?.users || []}
         />
       </div>
     </main>

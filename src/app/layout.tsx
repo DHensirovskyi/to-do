@@ -1,3 +1,4 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Montagu_Slab, Montserrat } from "next/font/google";
 import "./globals.css";
@@ -7,6 +8,7 @@ import '@mantine/dropzone/styles.css';
 import Header from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
 import { MantineProvider } from "@mantine/core";
+import { ApolloWrapper } from "./lib/apollo-client";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -33,17 +35,19 @@ export default function RootLayout({
   return (
     <html lang="en">
         <body className={`${montserrat.variable} ${montaguSlab.variable} antialiased font-sans`} suppressHydrationWarning>
-          <MantineProvider>
-          <div className="flex h-screen flex-col">
-            <Header />
-            <div className="flex flex-1">
-              <Sidebar />
-              <main className="flex-1 p-6 overflow-auto font-[\'Montagu Slab\',serif]">
-                {children}
-              </main>
-            </div>
-          </div>
-          </MantineProvider>
+          <ApolloWrapper>
+            <MantineProvider>
+              <div className="flex h-screen flex-col">
+                <Header />
+                <div className="flex flex-1">
+                  <Sidebar />
+                  <main className="flex-1 p-6 overflow-auto font-[\'Montagu Slab\',serif]">
+                    {children}
+                  </main>
+                </div>
+              </div>
+            </MantineProvider>
+          </ApolloWrapper>
         </body>
     </html>
   );

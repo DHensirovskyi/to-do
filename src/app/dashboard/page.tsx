@@ -1,3 +1,4 @@
+// src/app/dashboard/page.tsx
 'use client'
 
 import Image from "next/image";
@@ -5,7 +6,8 @@ import ToDo from "./ToDo";
 import TaskStatus from "./TaskStatus";
 import CompletedTask from "./CompletedTask";
 import InviteModal from "../modalWindows/InviteModal";
-import { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client/react";
+import { GET_TASKS } from '../lib/graphql/operations';
 import { VitalProps } from "../mytask/page";
 
 const usersImg = [
@@ -14,35 +16,16 @@ const usersImg = [
     '/usersImgDashboard/img3.svg',
     '/usersImgDashboard/img4.svg',
     '/usersImgDashboard/img5.svg',
-]
-
-
+];
 
 export default function Dashboard() {
-  const [tasks, setTasks] = useState<VitalProps["tasks"]>([]);
-  const [loading, setLoading] = useState(true);
+  type GetTasksData = { tasks: VitalProps["tasks"] };
+  const { data, loading, error } = useQuery<GetTasksData>(GET_TASKS);
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  const fetchTasks = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/tasks');
-      const data = await response.json() as VitalProps['tasks'];
-      const mappedData = data.map((task: VitalProps['tasks'][number], index: number) => ({
-        ...task,
-        id: index + 1,
-        _id: task._id
-      }));
-      setTasks(mappedData);
-    } catch (err) {
-      console.error('Failed to fetch tasks:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const tasks = data?.tasks.map((task: VitalProps["tasks"][number], index: number) => ({
+    ...task,
+    id: index + 1,
+  })) || [];
 
   if (loading) {
     return (
@@ -50,6 +33,16 @@ export default function Dashboard() {
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#228be6]/20 border-t-[#228be6]"></div>
           <p className="mt-4 text-[#A1A3AB]">Loading dashboard...</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
+        <div className="text-center text-red-500">
+          <p>Error loading dashboard: {error.message}</p>
         </div>
       </main>
     );

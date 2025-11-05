@@ -1,8 +1,11 @@
+// src/app/mytask/page.tsx
 'use client'
 
 import TaskLeft from "./TasksLeft";
 import TaskRight from "./TaskRight";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery, useMutation } from "@apollo/client/react";
+import { GET_TASKS, DELETE_TASK } from '../lib/graphql/operations';
 
 export interface VitalProps {
   tasks: {
@@ -19,29 +22,27 @@ export interface VitalProps {
 }
 
 export default function MyTask() {
-  const [tasks, setTasks] = useState<VitalProps["tasks"]>([]);
   const [selectedTask, setSelectedTask] = useState<VitalProps["tasks"][number] | null>(null);
-  const [loading, setLoading] = useState(true);
+  
+  const { data, loading, error, refetch } = useQuery<{ tasks: VitalProps["tasks"] }>(GET_TASKS);
+  const [deleteTaskMutation] = useMutation(DELETE_TASK);
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
+  const tasks = data?.tasks.map((task: VitalProps["tasks"][number], index: number) => ({
+    ...task,
+    id: index + 1,
+  })) || [];
 
-  const fetchTasks = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/tasks');
-      const data = await response.json() as VitalProps["tasks"];
-      const mappedData = data.map((task: VitalProps["tasks"][number], index: number) => ({
-        ...task,
-        id: index + 1,
-        _id: task._id
-      }));
-      setTasks(mappedData);
-    } catch (err) {
-      console.error('Failed to fetch tasks:', err);
-    } finally {
-      setLoading(false);
+  const handleTaskDeleted = async () => {
+    if (selectedTask?._id) {
+      try {
+        await deleteTaskMutation({
+          variables: { id: selectedTask._id }
+        });
+        setSelectedTask(null);
+        await refetch();
+      } catch (err) {
+        console.error('Failed to delete task:', err);
+      }
     }
   };
 
@@ -56,6 +57,16 @@ export default function MyTask() {
     );
   }
 
+  if (error) {
+    return (
+      <main className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
+        <div className="text-center text-red-500">
+          <p>Error loading tasks: {error.message}</p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="h-full xl:px-14 xl:py-8">
       <div className="grid xl:grid-cols-2 grid-cols-1 gap-4 h-full">
@@ -64,7 +75,7 @@ export default function MyTask() {
           onSelect={setSelectedTask}
           selectedTaskId={selectedTask?.id || null}
         />
-        <TaskRight task={selectedTask} onTaskDeleted={fetchTasks} />
+        <TaskRight task={selectedTask} onTaskDeleted={handleTaskDeleted} />
       </div>
     </main>
   );
