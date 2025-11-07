@@ -15,20 +15,19 @@ import { CREATE_TASK, GET_TASKS } from '../lib/graphql/operations';
 
 
 export default function CreateModalTask() {
+  const [imageUrl, setImageUrl] = useState('/tasksDashboard/img1.jpg');
+  const [isUploading, setIsUploading] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
-  const [message, setMessage] = useState<"Drag and drop files here or click to browse" | 'File was uploaded' | 'File is not suitable'>("Drag and drop files here or click to browse");
+  const [message, setMessage] = useState<"Drag and drop files here or click to browse" | "File was uploaded" | "File is not suitable" | "Uploading...">("Drag and drop files here or click to browse");
   const [description, setDescription] = useState('');
   const [date, setDate] = useState<Date | null>(null);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [title, setTitle] = useState('');
   const [priority, setPriority] = useState('');
-
-  const [createTask] = useMutation(CREATE_TASK, {
-    refetchQueries: [
+  const [createTask, { loading }] = useMutation(CREATE_TASK, { refetchQueries: [
       { query: GET_TASKS } 
-    ]
-  });
+    ] });
 
   const handleSubmit = async () => { // 👈 Сделай функцию async
     if (!title.trim() || !priority || !description.trim()) { 
@@ -42,7 +41,7 @@ export default function CreateModalTask() {
       priority: priority,
       status: "Not Started", 
       color: "#42ADE2",
-      image: "/tasksDashboard/img1.jpg",
+      image: imageUrl,
       createdDate: date ? date.toLocaleDateString("de-DE") : new Date().toLocaleDateString("de-DE"),
     };
 
@@ -68,6 +67,42 @@ export default function CreateModalTask() {
     setDescription('');
     setDate(null);
     setMessage("Drag and drop files here or click to browse");
+    setImageUrl('/tasksDashboard/img1.jpg');
+    setIsUploading(false);
+  };
+
+  const handleDrop = async (files: File[]) => {
+    const file = files[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    setMessage('Uploading...');
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 
+          'content-type': file.type,
+          'x-vercel-filename': file.name
+        },
+        body: file,
+      });
+
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+
+      const newBlob = await response.json();
+      
+      setImageUrl(newBlob.url);
+      setMessage('File was uploaded');
+      
+    } catch (uploadError) {
+      setMessage('File is not suitable');
+      console.error(uploadError);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const isFormValid = title.trim() !== '' && priority !== '' && description.trim() !== '';
@@ -146,10 +181,11 @@ export default function CreateModalTask() {
 
             <div className='border p-3 xl:col-span-1 col-auto border-black/10 rounded-sm flex flex-col justify-end h-full'>
             <Dropzone
-                onDrop={() => setMessage('File was uploaded')}
-                onReject={() => setMessage('File is not suitable')}
-                maxSize={3 * 1024 ** 2}
-                accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.pdf]}>
+            onDrop={handleDrop}
+            onReject={() => setMessage('File is not suitable')}
+            maxSize={3 * 1024 ** 2}
+            accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.pdf]}
+            loading={isUploading}>
                 <div className='flex flex-col justify-center items-center gap-5'>
                     {message === "Drag and drop files here or click to browse" && <IconUpload size={40} />}
                     {message === 'File was uploaded' && <FaCircleCheck size={40} color="#40c057" />}
@@ -161,7 +197,13 @@ export default function CreateModalTask() {
 
            </div>
            <div>
-            <Button type="submit" onClick={handleSubmit} disabled={!isFormValid}>Submit</Button>
+            <Button 
+              type="submit" 
+              onClick={handleSubmit} 
+              disabled={!isFormValid || isUploading || loading}
+            >
+              {isUploading ? 'Image uploading...' : (loading ? 'Saving...' : 'Submit')}
+            </Button>
            </div>
         </section>
       </Modal>

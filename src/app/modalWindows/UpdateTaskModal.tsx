@@ -8,18 +8,19 @@ import { DatePickerInput } from "@mantine/dates";
 import { IconCalendar } from "@tabler/icons-react";
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconUpload } from '@tabler/icons-react';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { FaCircleCheck } from "react-icons/fa6";
 import { MdModeEdit } from 'react-icons/md';
 import { useMutation } from '@apollo/client/react';
 import { UPDATE_TASK, GET_TASKS } from '../lib/graphql/operations';
+import type { VitalProps } from '../mytask/page';
 
-import type { VitalProps } from '../mytask/page'; 
 type Task = VitalProps["tasks"][number];
 
 export default function UpdateTaskModal({ dots, task }: { dots: boolean; task: Task | null }) {
   const [opened, { open, close }] = useDisclosure(false);
-  const [message, setMessage] = useState<"Drag and drop files here or click to browse" | 'File was uploaded' | 'File is not suitable'>("Drag and drop files here or click to browse");
+  const [message, setMessage] = useState<string>("Drag and drop files here or click to browse");
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   
@@ -27,10 +28,12 @@ export default function UpdateTaskModal({ dots, task }: { dots: boolean; task: T
   const [priority, setPriority] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState<Date | null>(null);
+  const [imageUrl, setImageUrl] = useState('/tasksDashboard/img1.jpg');
+  const [isUploading, setIsUploading] = useState(false);
 
   const [updateTask, { loading }] = useMutation(UPDATE_TASK, {
     refetchQueries: [
-      { query: GET_TASKS } 
+      { query: GET_TASKS }
     ]
   });
 
@@ -39,6 +42,9 @@ export default function UpdateTaskModal({ dots, task }: { dots: boolean; task: T
       setTitle(task.title);
       setPriority(task.priority);
       setDescription(task.description);
+      setImageUrl(task.image);
+      setMessage("Drag and drop files here or click to browse");
+
       const dateParts = task.createdDate.split('.');
       if (dateParts.length === 3) {
         const [day, month, year] = dateParts;
@@ -48,6 +54,39 @@ export default function UpdateTaskModal({ dots, task }: { dots: boolean; task: T
       }
     }
   }, [task, opened]);
+  const handleDrop = async (files: File[]) => {
+    const file = files[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    setMessage('Uploading...');
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 
+          'content-type': file.type,
+          'x-vercel-filename': file.name
+        },
+        body: file,
+      });
+
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+
+      const newBlob = await response.json();
+      
+      setImageUrl(newBlob.url);
+      setMessage('File was uploaded');
+      
+    } catch (uploadError) {
+      setMessage('File is not suitable');
+      console.error(uploadError);
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!task) return;
@@ -62,13 +101,14 @@ export default function UpdateTaskModal({ dots, task }: { dots: boolean; task: T
       description: description,
       priority: priority,
       createdDate: date ? date.toLocaleDateString("de-DE") : task.createdDate,
+      image: imageUrl,
     };
     
     try {
       await updateTask({
         variables: {
-          id: task._id,
-          input: taskInput 
+          id: task._id, 
+          input: taskInput
         }
       });
       
@@ -134,7 +174,6 @@ export default function UpdateTaskModal({ dots, task }: { dots: boolean; task: T
                             <Radio value="Extreme" label="Extreme" color='#F21E1E'/>
                             <Radio value="Moderate" label="Moderate" color='#3ABEFF'/>
                             <Radio value="Low" label="Low" color='#05A301'/>
-                            <Radio value="High" label="High" color='#F21E1E'/> 
                           </Group>
                         </Radio.Group>
                     </div>
@@ -144,31 +183,44 @@ export default function UpdateTaskModal({ dots, task }: { dots: boolean; task: T
                     <Textarea
                       placeholder="Start writing here"
                       name='description'
-                      value={description} 
+                      value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
             </div>
 
             <div className='border p-3 xl:col-span-1 col-auto border-black/10 rounded-sm flex flex-col justify-end h-full'>
-              <Dropzone
-                  onDrop={() => setMessage('File was uploaded')}
-                  onReject={() => setMessage('File is not suitable')}
-                  maxSize={3 * 1024 ** 2}
-                  accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.pdf]}>
-                  <div className='flex flex-col justify-center items-center gap-5'>
-                      {message === "Drag and drop files here or click to browse" && <IconUpload size={40} />}
-                      {message === 'File was uploaded' && <FaCircleCheck size={40} color="#40c057" />}
-                      {message === 'File is not suitable' && <FaTimesCircle size={40} color="red" />}
-                      <p className='text-center'>{message}</p>
-                  </div>
-              </Dropzone>
+            <Dropzone
+                onDrop={handleDrop}
+                onReject={() => setMessage('File is not suitable')}
+                maxSize={3 * 1024 ** 2}
+                accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.pdf]}
+                loading={isUploading}
+            >
+                <div className='flex flex-col justify-center items-center gap-5'>
+                    {message === "Drag and drop files here or click to browse" && imageUrl && !isUploading ? (
+                      <Image src={imageUrl} alt="Current task image" width={90} height={90} style={{ objectFit: 'cover' }} />
+                    ) : (
+                      <>
+                        {message === "Uploading..." && <div className="inline-block animate-spin rounded-full h-10 w-10 border-4 border-[#228be6]/20 border-t-[#228be6]"></div>}
+                        {message === 'File was uploaded' && <FaCircleCheck size={40} color="#40c057" />}
+                        {message === 'File is not suitable' && <FaTimesCircle size={40} color="red" />}
+                        {message === "Drag and drop files here or click to browse" && <IconUpload size={40} />}
+                      </>
+                    )}
+                    <p className='text-center'>{message}</p>
+                </div>
+            </Dropzone>
             </div>
 
            </div>
            <div>
-            <Button type="submit" onClick={handleSubmit} disabled={!isFormValid || loading}>
-              {loading ? 'Updating...' : 'Submit'}
+            <Button 
+              type="submit" 
+              onClick={handleSubmit} 
+              disabled={!isFormValid || isUploading || loading}
+            >
+              {isUploading ? 'Image uploading...' : (loading ? 'Saving...' : 'Submit')}
             </Button>
            </div>
         </section>

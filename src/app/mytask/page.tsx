@@ -48,28 +48,28 @@ export default function MyTask() {
 
   if (loading) {
     return (
-      <main className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
+      <section className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#228be6]/20 border-t-[#228be6]"></div>
           <p className="mt-4 text-[#A1A3AB]">Loading tasks...</p>
         </div>
-      </main>
+      </section>
     );
   }
 
   if (error) {
     return (
-      <main className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
+      <section className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
         <div className="text-center text-red-500">
           <p>Error loading tasks: {error.message}</p>
         </div>
-      </main>
+      </section>
     );
   }
 
   return (
-    <main className="h-full xl:px-14 xl:py-8">
-      <div className="grid xl:grid-cols-2 grid-cols-1 gap-4 h-full">
+    <section className="h-full xl:px-14 xl:py-8">
+      <div className="grid xl:grid-cols-2 grid-cols-1 gap-4 h-full items-start">
         <TaskLeft
           tasks={tasks}
           onSelect={setSelectedTask}
@@ -77,6 +77,6 @@ export default function MyTask() {
         />
         <TaskRight task={selectedTask} onTaskDeleted={handleTaskDeleted} />
       </div>
-    </main>
+    </section>
   );
 }

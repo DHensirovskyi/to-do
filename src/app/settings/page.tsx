@@ -47,27 +47,27 @@ export default function Settings() {
 
   if (loading) {
     return (
-      <main className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
+      <section className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#228be6]/20 border-t-[#228be6]"></div>
           <p className="mt-4 text-[#A1A3AB]">Loading settings...</p>
         </div>
-      </main>
+      </section>
     );
   }
 
   if (error) {
     return (
-      <main className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
+      <section className="h-full xl:px-14 xl:py-8 flex items-center justify-center">
         <div className="text-center text-red-500">
           <p>Error loading settings: {error.message}</p>
         </div>
-      </main>
+      </section>
     );
   }
 
   return (
-    <main className="h-full xl:px-14 xl:py-8">
+    <section className="h-full xl:px-14 xl:py-8">
       <div className="grid xl:grid-cols-3 grid-cols-1 gap-4 h-full">
         <SettingsLeft onTabChange={changeTab} activeTab={activeTab} />
         <SettingsRightTyped
@@ -76,6 +76,6 @@ export default function Settings() {
           users={data?.users || []}
         />
       </div>
-    </main>
+    </section>
   );
 }

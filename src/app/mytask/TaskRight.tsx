@@ -30,7 +30,7 @@ export default function TaskRight({ task, onTaskDeleted }: TaskRightProps) {
 
   return (
     <section className="w-full flex flex-col justify-between border rounded-[8px] border-black/20 bg-white p-5">
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-6">
         <div className="grid sm:grid-cols-[160px_1fr] grid-cols-1 gap-4">
           <div className="w-[160px] h-[160px] rounded-[14px] overflow-hidden">
             <Image 
@@ -51,7 +51,7 @@ export default function TaskRight({ task, onTaskDeleted }: TaskRightProps) {
         <p className="text-[1rem] text-[#A1A3AB]">{task.description}</p>
       </div>
 
-      <div className="flex items-center justify-end gap-3.5 sm:mt-0 mt-10">
+      <div className="flex items-center justify-end gap-3.5 sm:mt-6 mt-6">
         <button 
           onClick={handleDelete}
           className="bg-[#228be6] w-[36px] h-[36px] cursor-pointer rounded-[8px] flex justify-center items-center shrink-0 active:scale-98 hover:bg-[#339af0] transition-colors"

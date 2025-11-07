@@ -54,8 +54,6 @@ export default function CompletedTask(){
                     {task.title}
                   </p>
                 </div>
-                {/* 👇 ТЕПЕРЬ ОШИБКИ НЕТ! */}
-                <UpdateTaskModal dots={true} task={task}/> 
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-2 max-w-full">
