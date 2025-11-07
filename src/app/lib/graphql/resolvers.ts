@@ -4,11 +4,12 @@ import connectDb from "@/app/lib/mongodb";
 
 interface TaskInput {
   title: string;
-  description?: string;
-  completed: boolean;
-  userId: string;
-  // Добавьте сюда остальные поля из вашей схемы,
-  // например: priority, status, color, image, category
+  description: string;
+  priority?: string;
+  status?: string;
+  color?: string;
+  image?: string;
+  category?: string;
 }
 
 export const resolvers = {
@@ -27,23 +28,9 @@ export const resolvers = {
       await connectDb();
       return await Users.find().sort({ createdAt: -1 });
     },
-    
-    // ❌❌❌ УДАЛЕНО ❌❌❌
-    // 'createTask' НЕ должна быть здесь. Query - только для получения данных.
-    // Это и вызывало вашу ошибку сборки.
-    /*
-    createTask: async (_: unknown, { input }: { input: TaskInput }) => {
-      await connectDb();
-      return await Users.findById(input.userId);
-    },
-    */
   },
 
   Mutation: {
-    // ✅✅✅ ИСПРАВЛЕНО ✅✅✅
-    // 1. 'createTask' должна быть только здесь, в Mutation.
-    // 2. Тип 'input' изменен со 'string' на 'TaskInput',
-    //    чтобы соответствовать вашей Mongoose-модели Task.create().
     createTask: async (_: unknown, { input }: { input: TaskInput }) => {
       await connectDb();
       const newTask = await Task.create(input);
