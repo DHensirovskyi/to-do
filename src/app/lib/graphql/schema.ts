@@ -34,6 +34,7 @@ export const typeDefs = gql`
     color: String
     image: String
     category: String
+    createdDate: String
   }
 
   input UpdateTaskInput {
@@ -44,6 +45,7 @@ export const typeDefs = gql`
     color: String
     image: String
     category: String
+    createdDate: String
   }
 
   input CreateUserInput {

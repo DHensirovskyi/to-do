@@ -10,6 +10,7 @@ interface TaskInput {
   color?: string;
   image?: string;
   category?: string;
+  createdDate?: string;
 }
 
 export const resolvers = {

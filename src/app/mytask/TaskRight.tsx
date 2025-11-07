@@ -1,3 +1,5 @@
+// src/app/mytask/TaskRight.tsx
+
 import Image from "next/image";
 import { MdDelete } from "react-icons/md";
 import type { VitalProps } from "./page";
@@ -10,21 +12,11 @@ type TaskRightProps = {
 };
 
 export default function TaskRight({ task, onTaskDeleted }: TaskRightProps) {
-  const handleDelete = async () => {
+  const handleDelete = () => {
     if (!task?._id) return;
     
     if (confirm('Are you sure you want to delete this task?')) {
-      try {
-        const response = await fetch(`/api/tasks?id=${task._id}`, {
-          method: 'DELETE',
-        });
-
-        if (response.ok) {
-          onTaskDeleted?.();
-        }
-      } catch (error) {
-        console.error('Failed to delete task:', error);
-      }
+      onTaskDeleted?.(); 
     }
   };
 
@@ -66,7 +58,7 @@ export default function TaskRight({ task, onTaskDeleted }: TaskRightProps) {
         >
             <MdDelete color="white" size={20} />
         </button>
-        <UpdateTaskModal dots={false}/>
+        <UpdateTaskModal dots={false} task={task}/> 
       </div>
     </section>
   );

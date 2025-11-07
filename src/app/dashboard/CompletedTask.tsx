@@ -1,23 +1,28 @@
 import { MdOutlineTask } from "react-icons/md";
 import Image from "next/image";
 import UpdateTaskModal from "../modalWindows/UpdateTaskModal";
+import type { VitalProps } from "../mytask/page";
 
-const tasks = [
+const tasks: VitalProps["tasks"] = [ 
   {
+    _id: "dummy-id-1",
     id: 1,
     title: "Walk the dog",
     description: "Take the dog to the park and bring treats as well.",
     status: "Completed",
-    completedDate: "18/06/2025",
+    priority: "Low",
+    createdDate: "18.06.2025",
     image: "/tasksDashboard/img4.jpg",
     color: "#05A301"
   },
   {
+    _id: "dummy-id-2",
     id: 2,
     title: "Conduct meeting",
     description: "Meet with the client and finalize requirements.",
     status: "Completed",
-    completedDate: "15/06/2025",
+    priority: "Moderate",
+    createdDate: "15.06.2025",
     image: "/tasksDashboard/img5.jpg",
     color: "#05A301"
   }
@@ -49,7 +54,8 @@ export default function CompletedTask(){
                     {task.title}
                   </p>
                 </div>
-                <UpdateTaskModal dots={true}/>
+                {/* 👇 ТЕПЕРЬ ОШИБКИ НЕТ! */}
+                <UpdateTaskModal dots={true} task={task}/> 
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-2 max-w-full">
@@ -76,7 +82,7 @@ export default function CompletedTask(){
                 </p>
               </div>
               <div>
-                <p className="text-[#A1A3AB]">Completed on: {task.completedDate}</p>
+                <p className="text-[#A1A3AB]">Completed on: {task.createdDate}</p>
               </div>
             </div>
             </div>

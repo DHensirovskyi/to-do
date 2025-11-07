@@ -67,7 +67,7 @@ export default function ToDo({ tasks }: ToDoTasks){
                     {task.title}
                   </p>
                 </div>
-                <UpdateTaskModal dots={true}/>
+                <UpdateTaskModal dots={true} task={task} />
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-2 max-w-full">

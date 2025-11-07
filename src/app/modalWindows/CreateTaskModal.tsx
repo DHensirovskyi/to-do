@@ -10,39 +10,67 @@ import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconUpload } from '@tabler/icons-react';
 import { useState } from 'react';
 import { FaCircleCheck } from "react-icons/fa6";
-
+import { useMutation } from '@apollo/client/react';
+import { CREATE_TASK, GET_TASKS } from '../lib/graphql/operations';
 
 
 export default function CreateModalTask() {
   const [opened, { open, close }] = useDisclosure(false);
   const [message, setMessage] = useState<"Drag and drop files here or click to browse" | 'File was uploaded' | 'File is not suitable'>("Drag and drop files here or click to browse");
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState<Date | null>(null);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [title, setTitle] = useState('');
   const [priority, setPriority] = useState('');
 
-  const handleSubmit = () => {
-    if (!title.trim() || !priority) {
-      alert('Please fill in the required fields: Title and Priority');
+  const [createTask] = useMutation(CREATE_TASK, {
+    refetchQueries: [
+      { query: GET_TASKS } 
+    ]
+  });
+
+  const handleSubmit = async () => { // 👈 Сделай функцию async
+    if (!title.trim() || !priority || !description.trim()) { 
+      alert('Please fill in all required fields: Title, Priority, and Description');
       return;
     }
-    
-    console.log({
-      title,
-      priority,
-    });
-    
-    close();
-    resetForm();
+
+    const taskInput = {
+      title: title,
+      description: description,
+      priority: priority,
+      status: "Not Started", 
+      color: "#42ADE2",
+      image: "/tasksDashboard/img1.jpg",
+      createdDate: date ? date.toLocaleDateString("de-DE") : new Date().toLocaleDateString("de-DE"),
+    };
+
+    try {
+      await createTask({
+        variables: {
+          input: taskInput
+        }
+      });
+      
+      close();
+      resetForm();
+
+    } catch (err: unknown) {
+      console.error('Failed to create task:', err);
+      alert(`Error: ${err instanceof Error ? err.message : 'An unknown error occurred'}`);
+    }
   };
 
   const resetForm = () => {
     setTitle('');
     setPriority('');
+    setDescription('');
+    setDate(null);
     setMessage("Drag and drop files here or click to browse");
   };
 
-  const isFormValid = title.trim() !== '' && priority !== '';
+  const isFormValid = title.trim() !== '' && priority !== '' && description.trim() !== '';
 
   return (
     <>
@@ -83,6 +111,8 @@ export default function CreateModalTask() {
                             rightSection={<IconCalendar size={16} />}
                             valueFormat="DD/MM/YYYY"
                             className="flex-1"
+                            value={date}
+                            onChange={(value) => setDate(value ? new Date(value) : null)}
                         />
                     </form>
                 </div>
@@ -96,9 +126,9 @@ export default function CreateModalTask() {
                         onChange={setPriority}
                         >
                         <Group mt="xs">
-                            <Radio value="extreme" label="Extreme" color='#F21E1E'/>
-                            <Radio value="moderate" label="Moderate" color='#3ABEFF'/>
-                            <Radio value="low" label="Low" color='#05A301'/>
+                            <Radio value="Extreme" label="Extreme" color='#F21E1E'/>
+                            <Radio value="Moderate" label="Moderate" color='#3ABEFF'/>
+                            <Radio value="Low" label="Low" color='#05A301'/>
                         </Group>
                         </Radio.Group>
                     </div>
@@ -108,6 +138,8 @@ export default function CreateModalTask() {
                     <Textarea
                     placeholder="Start writing here"
                     name='description'
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
             </div>
